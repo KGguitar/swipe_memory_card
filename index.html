@@ -1,1 +1,1770 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SwipeMemoryCard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Kosugi+Maru&family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Theme: Sakura (default) */
+    --bg: #fff5f7;
+    --bg-grad-1: #ffe4ec;
+    --bg-grad-2: #e8f4ff;
+    --bg-grad-3: #fff4d6;
+    --surface: #ffffff;
+    --surface-soft: #fff9fb;
+    --border: #ffd6e1;
+    --border-soft: #ffeaf1;
+    --text: #4a3b4a;
+    --text-soft: #8a7a8a;
+    --text-mute: #b8a8b8;
+    --accent: #ff9ab8;
+    --accent-deep: #ff7aa2;
+    --accent-soft: #ffd0de;
+    --sub: #8fd9c8;
+    --sub-deep: #5fc2aa;
+    --sub-soft: #c8ecec;
+    --warn: #ffd773;
+    --warn-soft: #fff0c4;
+    --card-front-1: #ffe8f0;
+    --card-front-2: #fff0f8;
+    --card-front-3: #fff4e6;
+    --card-front-border: #ffd0de;
+    --card-back-1: #e8f4ff;
+    --card-back-2: #f0f8ff;
+    --card-back-3: #f0f4ff;
+    --card-back-border: #d4e4ff;
+    --card-front-label: #ff7aa2;
+    --card-back-label: #6a92d4;
+    --badge-learned-bg: #c8ecec;
+    --badge-learned-fg: #4a9985;
+    --badge-learning-bg: #fff0c4;
+    --badge-learning-fg: #b89040;
+    --btn-learning-1: #ffc1d4;
+    --btn-learning-2: #ffb0c8;
+    --btn-learning-border: #ff9ab8;
+    --btn-learning-fg: #a13a5e;
+    --btn-learned-1: #b8e8d8;
+    --btn-learned-2: #9fddc7;
+    --btn-learned-border: #5fc2aa;
+    --btn-learned-fg: #2d7a62;
+    --shadow-rgb: 255, 154, 184;
+    --shadow-sm: 0 2px 6px rgba(var(--shadow-rgb), 0.15);
+    --shadow: 0 4px 16px rgba(var(--shadow-rgb), 0.18);
+    --shadow-lg: 0 12px 32px rgba(var(--shadow-rgb), 0.22);
+    --radius-sm: 12px;
+    --radius: 20px;
+    --radius-lg: 28px;
+    --radius-xl: 36px;
+  }
 
+  /* ===== Theme: Mint ===== */
+  [data-theme="mint"] {
+    --bg: #f3fbf7;
+    --bg-grad-1: #d9f3e5;
+    --bg-grad-2: #e4f4ff;
+    --bg-grad-3: #fff4d6;
+    --surface: #ffffff;
+    --surface-soft: #f7fbf9;
+    --border: #bfe8d3;
+    --border-soft: #dcf0e5;
+    --text: #2f4a3f;
+    --text-soft: #6b8a7b;
+    --text-mute: #a8c0b5;
+    --accent: #5fc2aa;
+    --accent-deep: #3ea88b;
+    --accent-soft: #b8e8d8;
+    --sub: #a3c9ff;
+    --sub-deep: #7aa9e8;
+    --sub-soft: #d4e4ff;
+    --warn: #ffd773;
+    --warn-soft: #fff0c4;
+    --card-front-1: #d9f3e5;
+    --card-front-2: #e8faf0;
+    --card-front-3: #f0f4e6;
+    --card-front-border: #b8e8d8;
+    --card-back-1: #e4f4ff;
+    --card-back-2: #eef8ff;
+    --card-back-3: #f0f4ff;
+    --card-back-border: #c8dcf4;
+    --card-front-label: #3ea88b;
+    --card-back-label: #5a88c4;
+    --badge-learned-bg: #c8ecec;
+    --badge-learned-fg: #2d7a62;
+    --badge-learning-bg: #fff0c4;
+    --badge-learning-fg: #b89040;
+    --btn-learning-1: #ffd8a0;
+    --btn-learning-2: #ffc988;
+    --btn-learning-border: #ffb060;
+    --btn-learning-fg: #8a5520;
+    --btn-learned-1: #a8e0c8;
+    --btn-learned-2: #8ad0b5;
+    --btn-learned-border: #3ea88b;
+    --btn-learned-fg: #1f5d48;
+    --shadow-rgb: 95, 194, 170;
+  }
+
+  /* ===== Theme: Lavender ===== */
+  [data-theme="lavender"] {
+    --bg: #f7f3ff;
+    --bg-grad-1: #e8defc;
+    --bg-grad-2: #ffe4f4;
+    --bg-grad-3: #e0ecff;
+    --surface: #ffffff;
+    --surface-soft: #faf7ff;
+    --border: #dccef4;
+    --border-soft: #ece2fa;
+    --text: #3f2f5a;
+    --text-soft: #7d6ba1;
+    --text-mute: #b5a8c8;
+    --accent: #b39aff;
+    --accent-deep: #9575ea;
+    --accent-soft: #dccef4;
+    --sub: #ffb0d4;
+    --sub-deep: #ff8dbe;
+    --sub-soft: #ffd4e6;
+    --warn: #ffd773;
+    --warn-soft: #fff0c4;
+    --card-front-1: #ece2fa;
+    --card-front-2: #f4edff;
+    --card-front-3: #faf0ff;
+    --card-front-border: #dccef4;
+    --card-back-1: #ffe4f4;
+    --card-back-2: #ffeef7;
+    --card-back-3: #fff4fa;
+    --card-back-border: #ffd4e6;
+    --card-front-label: #9575ea;
+    --card-back-label: #d468a8;
+    --badge-learned-bg: #d8eae8;
+    --badge-learned-fg: #4a8a78;
+    --badge-learning-bg: #fff0c4;
+    --badge-learning-fg: #b89040;
+    --btn-learning-1: #f4c8e0;
+    --btn-learning-2: #ecb4d4;
+    --btn-learning-border: #d68ab8;
+    --btn-learning-fg: #7a3558;
+    --btn-learned-1: #c8e0d4;
+    --btn-learned-2: #a8d0bc;
+    --btn-learned-border: #6ab098;
+    --btn-learned-fg: #2d6854;
+    --shadow-rgb: 149, 117, 234;
+  }
+
+  /* ===== Theme: Sunset ===== */
+  [data-theme="sunset"] {
+    --bg: #fff5ef;
+    --bg-grad-1: #ffe0cc;
+    --bg-grad-2: #ffe4d4;
+    --bg-grad-3: #ffecc0;
+    --surface: #ffffff;
+    --surface-soft: #fffaf4;
+    --border: #ffd0b0;
+    --border-soft: #ffe4d0;
+    --text: #5a3528;
+    --text-soft: #a07858;
+    --text-mute: #c8a888;
+    --accent: #ff9560;
+    --accent-deep: #f07040;
+    --accent-soft: #ffc8a8;
+    --sub: #ffc858;
+    --sub-deep: #f0a828;
+    --sub-soft: #fde4a8;
+    --warn: #ff7a8a;
+    --warn-soft: #ffd4da;
+    --card-front-1: #ffe0cc;
+    --card-front-2: #ffe8d4;
+    --card-front-3: #fff0d8;
+    --card-front-border: #ffc8a8;
+    --card-back-1: #fde4a8;
+    --card-back-2: #ffeec0;
+    --card-back-3: #fff4d4;
+    --card-back-border: #f8d888;
+    --card-front-label: #f07040;
+    --card-back-label: #c88820;
+    --badge-learned-bg: #ffd4b8;
+    --badge-learned-fg: #a84a1a;
+    --badge-learning-bg: #fde4a8;
+    --badge-learning-fg: #8a5a10;
+    --btn-learning-1: #ffd0a8;
+    --btn-learning-2: #ffbf88;
+    --btn-learning-border: #f09858;
+    --btn-learning-fg: #7a3818;
+    --btn-learned-1: #ffd48a;
+    --btn-learned-2: #f8c068;
+    --btn-learned-border: #e0a040;
+    --btn-learned-fg: #6a4408;
+    --shadow-rgb: 240, 112, 64;
+  }
+
+  /* ===== Theme: Night ===== */
+  [data-theme="night"] {
+    --bg: #1a1d2e;
+    --bg-grad-1: #252a42;
+    --bg-grad-2: #2a2545;
+    --bg-grad-3: #1e2a3d;
+    --surface: #262a3e;
+    --surface-soft: #2d3246;
+    --border: #3d4260;
+    --border-soft: #323650;
+    --text: #e4e4f0;
+    --text-soft: #a8acc4;
+    --text-mute: #6a6e88;
+    --accent: #a3bdff;
+    --accent-deep: #7d9fff;
+    --accent-soft: #4a5580;
+    --sub: #8fe8d4;
+    --sub-deep: #5fd4b8;
+    --sub-soft: #3a5a55;
+    --warn: #ffd773;
+    --warn-soft: #5a4a20;
+    --card-front-1: #2f3858;
+    --card-front-2: #354062;
+    --card-front-3: #2d3858;
+    --card-front-border: #4a5580;
+    --card-back-1: #2a4548;
+    --card-back-2: #305055;
+    --card-back-3: #2d4850;
+    --card-back-border: #3e6a6a;
+    --card-front-label: #a3bdff;
+    --card-back-label: #8fe8d4;
+    --badge-learned-bg: #3a5a55;
+    --badge-learned-fg: #8fe8d4;
+    --badge-learning-bg: #5a4a20;
+    --badge-learning-fg: #ffd773;
+    --btn-learning-1: #4a3a58;
+    --btn-learning-2: #553f68;
+    --btn-learning-border: #8a6ab0;
+    --btn-learning-fg: #e0c8f4;
+    --btn-learned-1: #3a5a55;
+    --btn-learned-2: #4a6e68;
+    --btn-learned-border: #5fd4b8;
+    --btn-learned-fg: #c8f4e8;
+    --shadow-rgb: 20, 25, 50;
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.3);
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+
+  /* ===== Theme: Monochrome ===== */
+  [data-theme="mono"] {
+    --bg: #fafafa;
+    --bg-grad-1: #f0f0f0;
+    --bg-grad-2: #f5f5f5;
+    --bg-grad-3: #ededed;
+    --surface: #ffffff;
+    --surface-soft: #f8f8f8;
+    --border: #d4d4d4;
+    --border-soft: #e8e8e8;
+    --text: #222222;
+    --text-soft: #666666;
+    --text-mute: #a0a0a0;
+    --accent: #404040;
+    --accent-deep: #1a1a1a;
+    --accent-soft: #d0d0d0;
+    --sub: #808080;
+    --sub-deep: #555555;
+    --sub-soft: #dcdcdc;
+    --warn: #c0c0c0;
+    --warn-soft: #ececec;
+    --card-front-1: #fafafa;
+    --card-front-2: #ffffff;
+    --card-front-3: #f5f5f5;
+    --card-front-border: #d8d8d8;
+    --card-back-1: #2a2a2a;
+    --card-back-2: #1f1f1f;
+    --card-back-3: #252525;
+    --card-back-border: #3a3a3a;
+    --card-front-label: #666666;
+    --card-back-label: #c0c0c0;
+    --badge-learned-bg: #e0e0e0;
+    --badge-learned-fg: #2a2a2a;
+    --badge-learning-bg: #f0f0f0;
+    --badge-learning-fg: #666666;
+    --btn-learning-1: #f2f2f2;
+    --btn-learning-2: #e8e8e8;
+    --btn-learning-border: #c0c0c0;
+    --btn-learning-fg: #333333;
+    --btn-learned-1: #3a3a3a;
+    --btn-learned-2: #262626;
+    --btn-learned-border: #1a1a1a;
+    --btn-learned-fg: #ffffff;
+    --shadow-rgb: 0, 0, 0;
+    --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08);
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+  /* Monochrome: card-back text color override (dark card, light text) */
+  [data-theme="mono"] .card-back .card-text { color: #f0f0f0; }
+
+  /* ===== Theme: Paper ===== */
+  [data-theme="paper"] {
+    --bg: #f5ede0;
+    --bg-grad-1: #ece0cc;
+    --bg-grad-2: #f0e8d8;
+    --bg-grad-3: #ebe2d0;
+    --surface: #fbf5e8;
+    --surface-soft: #f6eedb;
+    --border: #d8c8a8;
+    --border-soft: #e8dcc0;
+    --text: #4a3a24;
+    --text-soft: #8a7454;
+    --text-mute: #b8a88a;
+    --accent: #8a6a3c;
+    --accent-deep: #5a4424;
+    --accent-soft: #d8c4a0;
+    --sub: #a8906c;
+    --sub-deep: #7a6040;
+    --sub-soft: #dcc8a4;
+    --warn: #c49a58;
+    --warn-soft: #e8d4a8;
+    --card-front-1: #fbf5e8;
+    --card-front-2: #f5ead4;
+    --card-front-3: #f0e2c4;
+    --card-front-border: #d8c4a0;
+    --card-back-1: #ecdfc0;
+    --card-back-2: #e4d5b0;
+    --card-back-3: #d8c89c;
+    --card-back-border: #c4ae80;
+    --card-front-label: #8a6a3c;
+    --card-back-label: #6a5028;
+    --badge-learned-bg: #d8c4a0;
+    --badge-learned-fg: #4a3010;
+    --badge-learning-bg: #ece0c4;
+    --badge-learning-fg: #7a5a2a;
+    --btn-learning-1: #ece0c4;
+    --btn-learning-2: #e0d0a8;
+    --btn-learning-border: #b89860;
+    --btn-learning-fg: #5a3e18;
+    --btn-learned-1: #c4a06c;
+    --btn-learned-2: #a88448;
+    --btn-learned-border: #5a4424;
+    --btn-learned-fg: #ffffff;
+    --shadow-rgb: 140, 100, 60;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    overscroll-behavior: none;
+  }
+
+  body {
+    font-family: 'Quicksand', 'Kosugi Maru', sans-serif;
+    background:
+      radial-gradient(ellipse at top left, var(--bg-grad-1) 0%, transparent 50%),
+      radial-gradient(ellipse at top right, var(--bg-grad-2) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom, var(--bg-grad-3) 0%, transparent 50%),
+      var(--bg);
+    background-attachment: fixed;
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  input, textarea { user-select: text; -webkit-user-select: text; }
+
+  /* Sparkle decorations */
+  body::before, body::after {
+    content: '';
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::before {
+    top: 10%; left: 5%;
+    width: 80px; height: 80px;
+    background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: float 8s ease-in-out infinite;
+  }
+  body::after {
+    bottom: 15%; right: 8%;
+    width: 120px; height: 120px;
+    background: radial-gradient(circle, var(--sub-soft) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: float 10s ease-in-out infinite reverse;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(20px, -20px); }
+  }
+
+  #app {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 4px 16px;
+    gap: 12px;
+  }
+  header .logo { order: 0; }
+  header .nav { order: 1; }
+  header .theme-picker {
+    position: absolute;
+    top: 12px;
+    right: 4px;
+  }
+  }
+
+  .logo {
+    font-family: 'Pacifico', cursive;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 1.1;
+    color: var(--accent-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(var(--shadow-rgb), 0.15);
+  }
+  .logo-text {
+    background: linear-gradient(135deg, var(--accent-deep) 0%, var(--accent) 60%, var(--sub-deep) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 0 2px;
+  }
+  .logo-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .logo-icon::before,
+  .logo-icon::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 26px;
+    border-radius: 5px;
+    box-shadow: var(--shadow-sm);
+  }
+  .logo-icon::before {
+    top: 2px;
+    left: 0;
+    background: linear-gradient(135deg, var(--card-back-1), var(--card-back-3));
+    border: 1.5px solid var(--card-back-border);
+    transform: rotate(-12deg);
+  }
+  .logo-icon::after {
+    top: 2px;
+    left: 8px;
+    background: linear-gradient(135deg, var(--card-front-1), var(--card-front-3));
+    border: 1.5px solid var(--card-front-border);
+    transform: rotate(8deg);
+  }
+  .logo-sparkle {
+    font-size: 20px;
+    animation: sparkle 2.5s ease-in-out infinite;
+    display: inline-block;
+  }
+  @keyframes sparkle {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: scale(1.2) rotate(15deg); opacity: 0.8; }
+  }
+
+  .nav {
+    display: flex;
+    gap: 4px;
+    background: var(--surface);
+    padding: 4px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm);
+    border: 2px solid var(--border-soft);
+  }
+  .nav button {
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav button.active {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(var(--shadow-rgb), 0.4);
+  }
+  .nav button:not(.active):hover { color: var(--accent-deep); }
+
+  /* Screens */
+  .screen { display: none; flex: 1; flex-direction: column; }
+  .screen.active { display: flex; }
+
+  /* ==== Study Screen ==== */
+  #study {
+    align-items: center;
+  }
+
+  .study-controls {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .chip-group {
+    display: flex;
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 3px;
+    box-shadow: var(--shadow-sm);
+    border: 2px solid var(--border-soft);
+  }
+  .chip-group button {
+    background: transparent;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .chip-group button.active {
+    background: var(--warn-soft);
+    color: var(--text);
+  }
+
+  .counter {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 14px;
+    color: var(--text-soft);
+    margin-bottom: 12px;
+    background: var(--surface);
+    padding: 6px 16px;
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm);
+    border: 2px solid var(--border-soft);
+  }
+  .counter b { color: var(--accent-deep); font-weight: 600; }
+
+  .card-area {
+    width: 100%;
+    max-width: 480px;
+    height: 360px;
+    position: relative;
+    perspective: 1200px;
+    margin: 8px 0 24px;
+  }
+
+  .card {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+  .card.flipped { transform: rotateY(180deg); }
+
+  .card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: var(--radius-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+  }
+
+  .card-face::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.4) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(255,255,255,0.3) 0%, transparent 40%);
+    pointer-events: none;
+  }
+
+  .card-front {
+    background: linear-gradient(135deg, var(--card-front-1) 0%, var(--card-front-2) 50%, var(--card-front-3) 100%);
+    border: 3px solid var(--card-front-border);
+  }
+  .card-back {
+    background: linear-gradient(135deg, var(--card-back-1) 0%, var(--card-back-2) 50%, var(--card-back-3) 100%);
+    border: 3px solid var(--card-back-border);
+    transform: rotateY(180deg);
+  }
+
+  .card-label {
+    position: absolute;
+    top: 20px;
+    left: 24px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-mute);
+  }
+  .card-front .card-label { color: var(--card-front-label); opacity: 0.7; }
+  .card-back .card-label { color: var(--card-back-label); opacity: 0.7; }
+
+  .card-text {
+    font-size: clamp(24px, 6vw, 40px);
+    font-weight: 600;
+    text-align: center;
+    color: var(--text);
+    line-height: 1.4;
+    word-break: break-word;
+    position: relative;
+    z-index: 1;
+  }
+  .card-front .card-text { font-family: 'Quicksand', sans-serif; }
+  .card-back .card-text { font-family: 'Kosugi Maru', sans-serif; font-size: clamp(22px, 5.5vw, 36px); }
+
+  .card-hint {
+    position: absolute;
+    bottom: 20px;
+    font-size: 12px;
+    color: var(--text-mute);
+    font-weight: 500;
+  }
+
+  .card-status-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .badge-learned { background: var(--badge-learned-bg); color: var(--badge-learned-fg); }
+  .badge-learning { background: var(--badge-learning-bg); color: var(--badge-learning-fg); }
+
+  /* Swipe feedback overlay */
+  .swipe-feedback {
+    position: absolute;
+    top: 40px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+    padding: 12px 32px;
+    border-radius: 999px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s;
+    pointer-events: none;
+    z-index: 10;
+    border: 4px solid;
+  }
+  .swipe-feedback.show { opacity: 1; transform: scale(1); }
+  .swipe-feedback.right { right: 20px; color: var(--btn-learned-fg); border-color: var(--btn-learned-border); background: var(--surface); transform: rotate(12deg) scale(1); }
+  .swipe-feedback.left { left: 20px; color: var(--btn-learning-fg); border-color: var(--btn-learning-border); background: var(--surface); transform: rotate(-12deg) scale(1); }
+  .swipe-feedback.up { left: 50%; translate: -50% 0; color: var(--text-soft); border-color: var(--text-soft); background: var(--surface); }
+
+  /* Action buttons */
+  .actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .action-btn {
+    background: var(--surface);
+    border: 3px solid var(--border-soft);
+    padding: 14px 24px;
+    border-radius: 999px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+  }
+  .action-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+  .action-btn:active { transform: translateY(0); }
+
+  .action-btn.learning {
+    background: linear-gradient(135deg, var(--btn-learning-1) 0%, var(--btn-learning-2) 100%);
+    border-color: var(--btn-learning-border);
+    color: var(--btn-learning-fg);
+  }
+  .action-btn.learned {
+    background: linear-gradient(135deg, var(--btn-learned-1) 0%, var(--btn-learned-2) 100%);
+    border-color: var(--btn-learned-border);
+    color: var(--btn-learned-fg);
+  }
+  .action-btn.skip {
+    background: var(--surface);
+    color: var(--text-soft);
+  }
+
+  .action-emoji { font-size: 20px; }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-soft);
+  }
+  .empty-state .big-emoji {
+    font-size: 64px;
+    margin-bottom: 16px;
+    display: block;
+    animation: wiggle 2s ease-in-out infinite;
+  }
+  @keyframes wiggle {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+  }
+  .empty-state h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 24px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .empty-state p { margin-bottom: 24px; font-size: 14px; }
+
+  .primary-btn {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-deep) 100%);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 999px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(var(--shadow-rgb), 0.4);
+    transition: all 0.2s;
+  }
+  .primary-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(var(--shadow-rgb), 0.5); }
+  .primary-btn:active { transform: translateY(0); }
+
+  /* ==== List Screen ==== */
+  #list { padding-bottom: 24px; }
+
+  .list-toolbar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  .search-box {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 12px 16px 12px 40px;
+    border: 2px solid var(--border-soft);
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-box input:focus { border-color: var(--accent); }
+  .search-box::before {
+    content: '🔍';
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    opacity: 0.6;
+  }
+
+  .add-btn {
+    background: linear-gradient(135deg, var(--sub) 0%, var(--sub-deep) 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .add-btn:hover { transform: translateY(-2px); }
+
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .card-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  .list-item {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 16px;
+    border: 2px solid var(--border-soft);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+  }
+  .list-item:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+
+  .list-item-en {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    padding-right: 80px;
+    word-break: break-word;
+  }
+  .list-item-ja {
+    font-family: 'Kosugi Maru', sans-serif;
+    font-size: 14px;
+    color: var(--text-soft);
+    margin-bottom: 12px;
+    word-break: break-word;
+  }
+
+  .list-item-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .list-item-badge:hover { transform: scale(1.05); }
+
+  .list-item-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .icon-btn {
+    background: var(--surface-soft);
+    border: 1px solid var(--border-soft);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-family: inherit;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .icon-btn:hover { background: var(--border-soft); color: var(--text); }
+  .icon-btn.danger:hover { background: #ffd0d0; color: #b04040; }
+
+  /* ==== Edit/Add Screen ==== */
+  .edit-form {
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+    background: var(--surface);
+    padding: 28px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    border: 3px solid var(--border-soft);
+  }
+  .edit-form h2 {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: var(--accent-deep);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .form-group { margin-bottom: 16px; }
+  .form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-soft);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-size: 16px;
+    background: var(--surface-soft);
+    color: var(--text);
+    outline: none;
+    transition: all 0.2s;
+    resize: vertical;
+  }
+  .form-group textarea { min-height: 60px; }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--accent);
+    background: white;
+  }
+  .form-group.ja input, .form-group.ja textarea {
+    font-family: 'Kosugi Maru', sans-serif;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .form-actions button { flex: 1; }
+
+  .secondary-btn {
+    background: var(--surface);
+    border: 2px solid var(--border-soft);
+    color: var(--text-soft);
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .secondary-btn:hover { background: var(--border-soft); color: var(--text); }
+
+  /* Data management - very subtle footer */
+  .data-section {
+    margin-top: auto;
+    padding: 24px 4px 8px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: 11px;
+  }
+  .data-section .data-link {
+    background: none;
+    border: none;
+    color: var(--text-mute);
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    padding: 4px 8px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .data-section .data-link:hover { opacity: 1; color: var(--text-soft); }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--accent-deep);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s;
+    z-index: 1000;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Theme picker */
+  .theme-picker {
+    position: relative;
+  }
+  .theme-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--border-soft);
+    background: var(--surface);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: transform 0.2s;
+  }
+  .theme-btn:hover { transform: scale(1.08); }
+  .theme-btn-swatch {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      #ff9ab8 0deg 51deg,
+      #5fc2aa 51deg 103deg,
+      #b39aff 103deg 154deg,
+      #ff9560 154deg 206deg,
+      #4a5580 206deg 257deg,
+      #2a2a2a 257deg 309deg,
+      #c4a06c 309deg 360deg
+    );
+    box-shadow: inset 0 0 0 2px var(--surface);
+  }
+  .theme-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--surface);
+    border: 2px solid var(--border-soft);
+    border-radius: var(--radius);
+    padding: 8px;
+    box-shadow: var(--shadow-lg);
+    display: none;
+    z-index: 100;
+    min-width: 160px;
+  }
+  .theme-menu.open { display: block; }
+  .theme-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    transition: background 0.15s;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    width: 100%;
+    text-align: left;
+  }
+  .theme-option:hover { background: var(--border-soft); }
+  .theme-option.active { background: var(--accent-soft); }
+  .theme-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid rgba(0,0,0,0.08);
+  }
+  .theme-dot.sakura { background: linear-gradient(135deg, #ff9ab8, #ffd773); }
+  .theme-dot.mint { background: linear-gradient(135deg, #5fc2aa, #a3c9ff); }
+  .theme-dot.lavender { background: linear-gradient(135deg, #b39aff, #ffb0d4); }
+  .theme-dot.sunset { background: linear-gradient(135deg, #ff9560, #ffc858); }
+  .theme-dot.night { background: linear-gradient(135deg, #1a1d2e, #a3bdff); }
+  .theme-dot.mono { background: linear-gradient(135deg, #fafafa, #1a1a1a); }
+  .theme-dot.paper { background: linear-gradient(135deg, #f5ead4, #8a6a3c); }
+  @media (max-width: 640px) {
+    #app { padding: 12px; }
+    .logo { font-size: 26px; gap: 8px; }
+    .logo-icon { width: 26px; height: 26px; }
+    .logo-sparkle { font-size: 16px; }
+    .nav button { padding: 6px 12px; font-size: 13px; }
+    .card-area { height: 320px; }
+    .card-face { padding: 24px; }
+    .action-btn { padding: 12px 18px; font-size: 14px; }
+    .card-list { grid-template-columns: 1fr; }
+    .edit-form { padding: 20px; }
+  }
+
+  @media (min-width: 641px) {
+    header { padding: 16px 8px 24px; }
+    .card-area { height: 400px; }
+  }
+
+  /* Card entry animation */
+  @keyframes cardIn {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .card.entering { animation: cardIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+  /* Card exit animations */
+  @keyframes cardExitRight {
+    to { transform: translateX(120%) rotate(20deg); opacity: 0; }
+  }
+  @keyframes cardExitLeft {
+    to { transform: translateX(-120%) rotate(-20deg); opacity: 0; }
+  }
+  @keyframes cardExitUp {
+    to { transform: translateY(-120%); opacity: 0; }
+  }
+  .card.exit-right { animation: cardExitRight 0.35s forwards; }
+  .card.exit-left { animation: cardExitLeft 0.35s forwards; }
+  .card.exit-up { animation: cardExitUp 0.35s forwards; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="logo">
+      <span class="logo-icon"></span>
+      <span class="logo-text">SwipeMemoryCard</span>
+      <span class="logo-sparkle">✨</span>
+    </div>
+    <nav class="nav">
+      <button data-screen="study" class="active">学習</button>
+      <button data-screen="list">一覧</button>
+      <button data-screen="edit">追加</button>
+    </nav>
+    <div class="theme-picker">
+      <button class="theme-btn" id="themeBtn" aria-label="テーマ切替">
+        <span class="theme-btn-swatch"></span>
+      </button>
+      <div class="theme-menu" id="themeMenu">
+        <button class="theme-option" data-theme-name="sakura"><span class="theme-dot sakura"></span>さくら</button>
+        <button class="theme-option" data-theme-name="mint"><span class="theme-dot mint"></span>みんと</button>
+        <button class="theme-option" data-theme-name="lavender"><span class="theme-dot lavender"></span>らべんだー</button>
+        <button class="theme-option" data-theme-name="sunset"><span class="theme-dot sunset"></span>さんせっと</button>
+        <button class="theme-option" data-theme-name="night"><span class="theme-dot night"></span>よぞら</button>
+        <button class="theme-option" data-theme-name="mono"><span class="theme-dot mono"></span>ものくろ</button>
+        <button class="theme-option" data-theme-name="paper"><span class="theme-dot paper"></span>かみ</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== Study Screen ===== -->
+  <section id="study" class="screen active">
+    <div class="study-controls">
+      <div class="chip-group" id="orderGroup">
+        <button data-order="sequential" class="active">順番</button>
+        <button data-order="random">ランダム</button>
+      </div>
+      <div class="chip-group" id="filterGroup">
+        <button data-filter="all" class="active">全部</button>
+        <button data-filter="learning">まだ</button>
+        <button data-filter="learned">覚えた</button>
+      </div>
+      <div class="chip-group" id="directionGroup">
+        <button data-direction="en-ja" class="active">英→日</button>
+        <button data-direction="ja-en">日→英</button>
+      </div>
+    </div>
+
+    <div class="counter" id="counter">0 / 0</div>
+
+    <div class="card-area" id="cardArea">
+      <!-- Card injected here -->
+    </div>
+
+    <div class="actions" id="studyActions">
+      <button class="action-btn learning" data-action="learning">
+        <span class="action-emoji">💭</span>まだ
+      </button>
+      <button class="action-btn learned" data-action="learned">
+        <span class="action-emoji">✨</span>覚えた
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== List Screen ===== -->
+  <section id="list" class="screen">
+    <div class="list-toolbar">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="検索（英語・日本語）">
+      </div>
+      <button class="add-btn" onclick="showScreen('edit')">＋ 追加</button>
+    </div>
+    <div class="filter-row">
+      <div class="chip-group" id="listFilterGroup">
+        <button data-list-filter="all" class="active">全部</button>
+        <button data-list-filter="learning">まだ</button>
+        <button data-list-filter="learned">覚えた</button>
+      </div>
+    </div>
+    <div class="card-list" id="cardList"></div>
+    <div class="data-section">
+      <button class="data-link" onclick="exportData()">エクスポート</button>
+      <button class="data-link" onclick="document.getElementById('importFile').click()">インポート</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
+    </div>
+  </section>
+
+  <!-- ===== Edit Screen ===== -->
+  <section id="edit" class="screen">
+    <div class="edit-form">
+      <h2 id="editTitle"><span>✏️</span>カードを追加</h2>
+      <div class="form-group">
+        <label>英語</label>
+        <textarea id="enInput" placeholder="例: serendipity" rows="2"></textarea>
+      </div>
+      <div class="form-group ja">
+        <label>日本語</label>
+        <textarea id="jaInput" placeholder="例: 偶然の幸運な発見" rows="2"></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="secondary-btn" onclick="cancelEdit()">キャンセル</button>
+        <button class="primary-btn" onclick="saveCard()" id="saveBtn">保存</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* =========================================================
+   §0 STATE
+   ========================================================= */
+const STORAGE_KEY = 'flashcard_v1';
+const state = {
+  cards: [],           // { id, en, ja, status, createdAt }
+  screen: 'study',
+  order: 'sequential', // sequential | random
+  filter: 'all',       // all | learning | learned
+  direction: 'en-ja',  // en-ja | ja-en
+  listFilter: 'all',
+  searchQuery: '',
+  currentIndex: 0,
+  currentQueue: [],    // ordered ids for study session
+  flipped: false,
+  editingId: null,     // null = adding new
+};
+
+/* =========================================================
+   §1 STORAGE
+   ========================================================= */
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      state.cards = Array.isArray(data.cards) ? data.cards : [];
+    }
+  } catch (e) {
+    console.warn('Load failed', e);
+    state.cards = [];
+  }
+}
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ cards: state.cards }));
+  } catch (e) {
+    toast('保存に失敗しました');
+  }
+}
+
+/* =========================================================
+   §2 UTILS
+   ========================================================= */
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+/* =========================================================
+   §3 SCREEN NAVIGATION
+   ========================================================= */
+function showScreen(name) {
+  state.screen = name;
+  document.querySelectorAll('.screen').forEach(s => s.classList.toggle('active', s.id === name));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.screen === name));
+  if (name === 'study') { rebuildQueue(); renderStudy(); }
+  if (name === 'list') renderList();
+  if (name === 'edit') {
+    if (state.editingId === null) {
+      document.getElementById('editTitle').innerHTML = '<span>✏️</span>カードを追加';
+      document.getElementById('enInput').value = '';
+      document.getElementById('jaInput').value = '';
+    }
+    setTimeout(() => document.getElementById('enInput').focus(), 50);
+  }
+}
+
+document.querySelectorAll('.nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.editingId = null;
+    showScreen(btn.dataset.screen);
+  });
+});
+
+/* =========================================================
+   §4 STUDY QUEUE
+   ========================================================= */
+function filteredCards() {
+  let list = state.cards;
+  if (state.filter !== 'all') list = list.filter(c => c.status === state.filter);
+  return list;
+}
+
+function rebuildQueue() {
+  const list = filteredCards();
+  let ordered = list.slice().sort((a, b) => a.createdAt - b.createdAt);
+  if (state.order === 'random') ordered = shuffle(ordered);
+  state.currentQueue = ordered.map(c => c.id);
+  state.currentIndex = 0;
+  state.flipped = false;
+}
+
+function currentCard() {
+  if (state.currentQueue.length === 0) return null;
+  const id = state.currentQueue[state.currentIndex % state.currentQueue.length];
+  return state.cards.find(c => c.id === id) || null;
+}
+
+/* =========================================================
+   §5 STUDY RENDER
+   ========================================================= */
+function renderStudy() {
+  const area = document.getElementById('cardArea');
+  const counter = document.getElementById('counter');
+  const actions = document.getElementById('studyActions');
+  area.innerHTML = '';
+
+  if (state.cards.length === 0) {
+    counter.style.display = 'none';
+    actions.style.display = 'none';
+    area.style.height = 'auto';
+    area.innerHTML = `
+      <div class="empty-state">
+        <span class="big-emoji">🌸</span>
+        <h2>カードがまだありません</h2>
+        <p>最初のカードを追加してみましょう</p>
+        <button class="primary-btn" onclick="showScreen('edit')">＋ カードを追加</button>
+      </div>`;
+    return;
+  }
+
+  if (state.currentQueue.length === 0) {
+    counter.style.display = 'none';
+    actions.style.display = 'none';
+    area.style.height = 'auto';
+    const msg = state.filter === 'learned' ? '覚えたカードがまだありません' :
+                state.filter === 'learning' ? 'まだのカードがありません ✨' : '表示できるカードがありません';
+    area.innerHTML = `
+      <div class="empty-state">
+        <span class="big-emoji">${state.filter === 'learning' ? '🎉' : '🌷'}</span>
+        <h2>${msg}</h2>
+        <p>フィルターを変えてみてください</p>
+      </div>`;
+    return;
+  }
+
+  counter.style.display = '';
+  actions.style.display = '';
+  area.style.height = '';
+
+  const card = currentCard();
+  const pos = (state.currentIndex % state.currentQueue.length) + 1;
+  counter.innerHTML = `<b>${pos}</b> / ${state.currentQueue.length}`;
+
+  const frontText = state.direction === 'en-ja' ? card.en : card.ja;
+  const backText = state.direction === 'en-ja' ? card.ja : card.en;
+  const frontLabel = state.direction === 'en-ja' ? 'ENGLISH' : 'JAPANESE';
+  const backLabel = state.direction === 'en-ja' ? 'JAPANESE' : 'ENGLISH';
+  const statusBadge = card.status === 'learned'
+    ? '<div class="card-status-badge badge-learned">✨ 覚えた</div>'
+    : '<div class="card-status-badge badge-learning">💭 まだ</div>';
+
+  const cardEl = document.createElement('div');
+  cardEl.className = 'card entering';
+  cardEl.innerHTML = `
+    <div class="card-face card-front">
+      <div class="card-label">${frontLabel}</div>
+      ${statusBadge}
+      <div class="card-text">${escapeHtml(frontText)}</div>
+      <div class="card-hint">タップで答えを見る</div>
+    </div>
+    <div class="card-face card-back">
+      <div class="card-label">${backLabel}</div>
+      <div class="card-text">${escapeHtml(backText)}</div>
+      <div class="card-hint">タップで戻る</div>
+    </div>
+    <div class="swipe-feedback right">✨ 覚えた</div>
+    <div class="swipe-feedback left">💭 まだ</div>
+  `;
+  area.appendChild(cardEl);
+
+  // flip on tap
+  cardEl.addEventListener('click', (e) => {
+    if (cardEl._dragging) return;
+    state.flipped = !state.flipped;
+    cardEl.classList.toggle('flipped', state.flipped);
+  });
+
+  attachSwipe(cardEl);
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* =========================================================
+   §6 SWIPE
+   ========================================================= */
+function attachSwipe(cardEl) {
+  let startX = 0, startY = 0;
+  let dx = 0, dy = 0;
+  let dragging = false;
+  const feedbackR = cardEl.querySelector('.swipe-feedback.right');
+  const feedbackL = cardEl.querySelector('.swipe-feedback.left');
+
+  const onStart = (x, y) => {
+    startX = x; startY = y; dx = 0; dy = 0;
+    dragging = true;
+    cardEl._dragging = false;
+    cardEl.style.transition = 'none';
+  };
+  const onMove = (x, y) => {
+    if (!dragging) return;
+    dx = x - startX; dy = y - startY;
+    if (Math.abs(dx) > 8 || Math.abs(dy) > 8) cardEl._dragging = true;
+    const rot = dx / 20;
+    const flipRot = state.flipped ? 180 : 0;
+    cardEl.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg) rotateY(${flipRot}deg)`;
+    feedbackR.classList.toggle('show', dx > 60);
+    feedbackL.classList.toggle('show', dx < -60);
+  };
+  const onEnd = () => {
+    if (!dragging) return;
+    dragging = false;
+    cardEl.style.transition = '';
+    feedbackR.classList.remove('show');
+    feedbackL.classList.remove('show');
+    const absX = Math.abs(dx), absY = Math.abs(dy);
+    const threshold = 80;
+    if (absX > threshold && absX > absY) {
+      if (dx > 0) { cardEl.classList.add('exit-right'); handleAction('learned', cardEl); }
+      else       { cardEl.classList.add('exit-left');  handleAction('learning', cardEl); }
+    } else {
+      const flipRot = state.flipped ? 180 : 0;
+      cardEl.style.transform = `rotateY(${flipRot}deg)`;
+      setTimeout(() => { cardEl._dragging = false; }, 50);
+    }
+  };
+
+  // touch
+  cardEl.addEventListener('touchstart', e => {
+    const t = e.touches[0]; onStart(t.clientX, t.clientY);
+  }, { passive: true });
+  cardEl.addEventListener('touchmove', e => {
+    const t = e.touches[0]; onMove(t.clientX, t.clientY);
+    if (cardEl._dragging) e.preventDefault();
+  }, { passive: false });
+  cardEl.addEventListener('touchend', onEnd);
+  cardEl.addEventListener('touchcancel', onEnd);
+
+  // mouse
+  let mouseDown = false;
+  cardEl.addEventListener('mousedown', e => {
+    mouseDown = true; onStart(e.clientX, e.clientY);
+  });
+  window.addEventListener('mousemove', e => {
+    if (mouseDown) onMove(e.clientX, e.clientY);
+  });
+  window.addEventListener('mouseup', e => {
+    if (mouseDown) { mouseDown = false; onEnd(); }
+  });
+}
+
+/* =========================================================
+   §7 ACTIONS
+   ========================================================= */
+function handleAction(action, cardEl) {
+  const card = currentCard();
+  if (!card) return;
+  card.status = action;
+  saveData();
+  // advance
+  setTimeout(() => {
+    state.currentIndex++;
+    state.flipped = false;
+    // if filter is not 'all', the card may no longer match; rebuild queue
+    if (state.filter !== 'all') {
+      rebuildQueue();
+    }
+    renderStudy();
+  }, 320);
+}
+
+document.getElementById('studyActions').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const cardEl = document.querySelector('.card');
+  if (!cardEl) return;
+  const action = btn.dataset.action;
+  if (action === 'learned') cardEl.classList.add('exit-right');
+  else cardEl.classList.add('exit-left');
+  handleAction(action, cardEl);
+});
+
+/* =========================================================
+   §8 STUDY CONTROLS
+   ========================================================= */
+document.getElementById('orderGroup').addEventListener('click', e => {
+  const btn = e.target.closest('[data-order]'); if (!btn) return;
+  state.order = btn.dataset.order;
+  document.querySelectorAll('#orderGroup button').forEach(b => b.classList.toggle('active', b === btn));
+  rebuildQueue(); renderStudy();
+});
+document.getElementById('filterGroup').addEventListener('click', e => {
+  const btn = e.target.closest('[data-filter]'); if (!btn) return;
+  state.filter = btn.dataset.filter;
+  document.querySelectorAll('#filterGroup button').forEach(b => b.classList.toggle('active', b === btn));
+  rebuildQueue(); renderStudy();
+});
+document.getElementById('directionGroup').addEventListener('click', e => {
+  const btn = e.target.closest('[data-direction]'); if (!btn) return;
+  state.direction = btn.dataset.direction;
+  document.querySelectorAll('#directionGroup button').forEach(b => b.classList.toggle('active', b === btn));
+  renderStudy();
+});
+
+/* =========================================================
+   §9 LIST SCREEN
+   ========================================================= */
+function renderList() {
+  const container = document.getElementById('cardList');
+  let list = state.cards.slice().sort((a, b) => b.createdAt - a.createdAt);
+  if (state.listFilter !== 'all') list = list.filter(c => c.status === state.listFilter);
+  if (state.searchQuery) {
+    const q = state.searchQuery.toLowerCase();
+    list = list.filter(c => c.en.toLowerCase().includes(q) || c.ja.toLowerCase().includes(q));
+  }
+  if (list.length === 0) {
+    container.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><span class="big-emoji">🌱</span><h2>カードがありません</h2><p>新しいカードを追加してみましょう</p></div>`;
+    return;
+  }
+  container.innerHTML = list.map(c => {
+    const badgeClass = c.status === 'learned' ? 'badge-learned' : 'badge-learning';
+    const badgeText = c.status === 'learned' ? '✨ 覚えた' : '💭 まだ';
+    return `
+      <div class="list-item">
+        <div class="list-item-badge ${badgeClass}" onclick="toggleStatus('${c.id}')">${badgeText}</div>
+        <div class="list-item-en">${escapeHtml(c.en)}</div>
+        <div class="list-item-ja">${escapeHtml(c.ja)}</div>
+        <div class="list-item-actions">
+          <button class="icon-btn" onclick="editCard('${c.id}')">編集</button>
+          <button class="icon-btn danger" onclick="deleteCard('${c.id}')">削除</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  state.searchQuery = e.target.value;
+  renderList();
+});
+document.getElementById('listFilterGroup').addEventListener('click', e => {
+  const btn = e.target.closest('[data-list-filter]'); if (!btn) return;
+  state.listFilter = btn.dataset.listFilter;
+  document.querySelectorAll('#listFilterGroup button').forEach(b => b.classList.toggle('active', b === btn));
+  renderList();
+});
+
+function toggleStatus(id) {
+  const c = state.cards.find(x => x.id === id); if (!c) return;
+  c.status = c.status === 'learned' ? 'learning' : 'learned';
+  saveData();
+  renderList();
+}
+function editCard(id) {
+  const c = state.cards.find(x => x.id === id); if (!c) return;
+  state.editingId = id;
+  document.getElementById('editTitle').innerHTML = '<span>✏️</span>カードを編集';
+  document.getElementById('enInput').value = c.en;
+  document.getElementById('jaInput').value = c.ja;
+  showScreen('edit');
+}
+function deleteCard(id) {
+  const c = state.cards.find(x => x.id === id); if (!c) return;
+  if (!confirm(`「${c.en}」を削除しますか？`)) return;
+  state.cards = state.cards.filter(x => x.id !== id);
+  saveData();
+  renderList();
+  toast('削除しました');
+}
+
+/* =========================================================
+   §10 EDIT SCREEN
+   ========================================================= */
+function saveCard() {
+  const en = document.getElementById('enInput').value.trim();
+  const ja = document.getElementById('jaInput').value.trim();
+  if (!en || !ja) { toast('英語と日本語の両方を入力してください'); return; }
+  if (state.editingId) {
+    const c = state.cards.find(x => x.id === state.editingId);
+    if (c) { c.en = en; c.ja = ja; }
+    toast('更新しました');
+  } else {
+    state.cards.push({ id: uid(), en, ja, status: 'learning', createdAt: Date.now() });
+    toast('追加しました ✨');
+  }
+  state.editingId = null;
+  saveData();
+  showScreen('list');
+}
+function cancelEdit() {
+  state.editingId = null;
+  showScreen(state.cards.length === 0 ? 'study' : 'list');
+}
+
+/* =========================================================
+   §11 DATA IMPORT/EXPORT
+   ========================================================= */
+function exportData() {
+  const data = JSON.stringify({ cards: state.cards, exportedAt: new Date().toISOString() }, null, 2);
+  const blob = new Blob([data], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `flashcard_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('エクスポートしました');
+}
+function importData(event) {
+  const file = event.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!Array.isArray(data.cards)) throw new Error('invalid');
+      const merge = confirm(`${data.cards.length}件のカードが見つかりました。\nOK: 既存に追加 / キャンセル: 既存を置き換え`);
+      if (merge) {
+        const existingIds = new Set(state.cards.map(c => c.id));
+        data.cards.forEach(c => {
+          if (!c.id || existingIds.has(c.id)) c.id = uid();
+          if (!c.createdAt) c.createdAt = Date.now();
+          if (!c.status) c.status = 'learning';
+          state.cards.push(c);
+        });
+      } else {
+        state.cards = data.cards.map(c => ({
+          id: c.id || uid(),
+          en: c.en || '',
+          ja: c.ja || '',
+          status: c.status === 'learned' ? 'learned' : 'learning',
+          createdAt: c.createdAt || Date.now()
+        }));
+      }
+      saveData();
+      renderList();
+      toast('インポートしました ✨');
+    } catch (err) {
+      toast('ファイルが読めませんでした');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+/* =========================================================
+   §11.5 THEME
+   ========================================================= */
+const THEME_KEY = 'flashcard_theme_v1';
+const THEMES = ['sakura', 'mint', 'lavender', 'sunset', 'night', 'mono', 'paper'];
+
+function applyTheme(name) {
+  if (!THEMES.includes(name)) name = 'sakura';
+  if (name === 'sakura') {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', name);
+  }
+  // mark active option
+  document.querySelectorAll('.theme-option').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.themeName === name);
+  });
+  try { localStorage.setItem(THEME_KEY, name); } catch(e) {}
+}
+
+function loadTheme() {
+  let name = 'sakura';
+  try { name = localStorage.getItem(THEME_KEY) || 'sakura'; } catch(e) {}
+  applyTheme(name);
+}
+
+document.getElementById('themeBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  document.getElementById('themeMenu').classList.toggle('open');
+});
+
+document.querySelectorAll('.theme-option').forEach(btn => {
+  btn.addEventListener('click', () => {
+    applyTheme(btn.dataset.themeName);
+    document.getElementById('themeMenu').classList.remove('open');
+  });
+});
+
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('themeMenu');
+  const btn = document.getElementById('themeBtn');
+  if (!menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('open');
+  }
+});
+
+/* =========================================================
+   §12 INIT
+   ========================================================= */
+loadTheme();
+loadData();
+if (state.cards.length === 0) {
+  // still start on study, which will show empty-state
+}
+rebuildQueue();
+renderStudy();
+</script>
+</body>
+</html>
